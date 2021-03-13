@@ -2,6 +2,7 @@ import './App.css';
 import DemoGrid from './TailWindComponent/DemoGrid';
 import FlexDemo from './TailWindComponent/FlexDemo';
 import PaddingMarginDemo from './TailWindComponent/PaddingMarginDemo';
+import TextBackGroundDemo from './TailWindComponent/TextBackGroundDemo';
 import WidthHeightDemo from './TailWindComponent/WidthHeightDemo';
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
       {/* <DemoGrid /> */}
       {/* <PaddingMarginDemo /> */}
       {/* <WidthHeightDemo /> */}
-      <FlexDemo />
+      {/* <FlexDemo /> */}
+      <TextBackGroundDemo />
     </div>
   );
 }

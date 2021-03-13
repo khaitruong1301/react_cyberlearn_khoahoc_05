@@ -15,7 +15,7 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
+      success:colors.green,
       black: colors.black,
       white: colors.white,
       gray: colors.coolGray,
@@ -213,6 +213,7 @@ module.exports = {
       '7xl': ['4.5rem', { lineHeight: '1' }],
       '8xl': ['6rem', { lineHeight: '1' }],
       '9xl': ['8rem', { lineHeight: '1' }],
+      
     },
     fontWeight: {
       thin: '100',
