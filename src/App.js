@@ -1,4 +1,5 @@
 import './App.css';
+import BorderRadiusDemo from './TailWindComponent/BorderRadiusDemo';
 import DemoGrid from './TailWindComponent/DemoGrid';
 import FlexDemo from './TailWindComponent/FlexDemo';
 import PaddingMarginDemo from './TailWindComponent/PaddingMarginDemo';
@@ -12,7 +13,8 @@ function App() {
       {/* <PaddingMarginDemo /> */}
       {/* <WidthHeightDemo /> */}
       {/* <FlexDemo /> */}
-      <TextBackGroundDemo />
+      {/* <TextBackGroundDemo /> */}
+      <BorderRadiusDemo />
     </div>
   );
 }
