@@ -1,0 +1,9 @@
+.text-color-red {
+    color: red;
+}
+
+
+.content {
+    @apply text-sm text-white ml-5 mt-5 hover:text-yellow-500 duration-500;
+}
+

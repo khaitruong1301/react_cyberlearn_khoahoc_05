@@ -1,5 +1,6 @@
 import './App.css';
 import BorderRadiusDemo from './TailWindComponent/BorderRadiusDemo';
+import CustomCss from './TailWindComponent/CustomCss';
 import DemoGrid from './TailWindComponent/DemoGrid';
 import FlexDemo from './TailWindComponent/FlexDemo';
 import PaddingMarginDemo from './TailWindComponent/PaddingMarginDemo';
@@ -16,7 +17,8 @@ function App() {
       {/* <FlexDemo /> */}
       {/* <TextBackGroundDemo /> */}
       {/* <BorderRadiusDemo /> */}
-      <ResponsiveDemo />
+      {/* <ResponsiveDemo /> */}
+      <CustomCss />
     </div>
   );
 }
