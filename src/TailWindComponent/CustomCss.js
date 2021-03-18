@@ -11,6 +11,9 @@ export default class CustomCss extends Component {
 
                     <p className="content">To control the font size of an element at a specific breakpoint, add a  prefix to any existing font size utility. For example, use md:text-lg to apply the text-lg utility at only medium screen sizes and above.</p>
 
+                    <button class="animation-scale p-5">
+                        Hover me
+                    </button>
                 </article>
             </div>
         )
