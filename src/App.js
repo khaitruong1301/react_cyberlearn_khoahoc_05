@@ -1,4 +1,14 @@
 import './App.css';
+import BaiTapTongHop from './BaiTapTongHop/BaiTapTongHop';
+import ChunkLodash from './Lodash/ChunkLodash';
+import CompareObjectArray from './Lodash/CompareObjectArray';
+import FillLodash from './Lodash/FillLodash';
+import FlattenLodash from './Lodash/FlattenLodash';
+import Include from './Lodash/Include';
+import JoinDemo from './Lodash/JoinDemo';
+import LastFirstLodash from './Lodash/LastFirstLodash';
+import SortLodash from './Lodash/SortLodash';
+import UniqLodash from './Lodash/UniqLodash';
 import BaiTapLayoutTailwindcss from './TailWindComponent/BaiTapLayoutTailwindcss';
 import BorderRadiusDemo from './TailWindComponent/BorderRadiusDemo';
 import CustomCss from './TailWindComponent/CustomCss';
@@ -20,9 +30,22 @@ function App() {
       {/* <BorderRadiusDemo /> */}
       {/* <ResponsiveDemo /> */}
       {/* <CustomCss /> */}
-      <BaiTapLayoutTailwindcss />
+      {/* <BaiTapLayoutTailwindcss /> */}
+      {/* <JoinDemo /> */}
+      {/* <LastFirstLodash /> */}
+      {/* <ChunkLodash /> */}
+      {/* <FillLodash /> */}
+      {/* <SortLodash /> */}
+      {/* <Include /> */}
+      {/* <UniqLodash /> */}
+      {/* <FlattenLodash /> */}
+      {/* <CompareObjectArray /> */}
+      <BaiTapTongHop />
     </div>
   );
 }
 
 export default App;
+
+
+
