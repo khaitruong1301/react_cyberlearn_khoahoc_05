@@ -6,8 +6,6 @@ import Home from './pages/Home/Home';
 export const history = createBrowserHistory();
 
 function App() {
-
-
   return (
     <Router history={history}>
       <Switch>
