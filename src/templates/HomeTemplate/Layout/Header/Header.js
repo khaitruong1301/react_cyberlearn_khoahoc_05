@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 
 
@@ -11,17 +12,15 @@ export default function Header(props) {
                 </a>
                 <ul className="items-stretch hidden space-x-3 lg:flex">
                     <li className="flex">
-                        <a href="#" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-violet-600 border-violet-600 text-white">Link</a>
+                        <NavLink to="/home" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-violet-600 border-violet-600 text-white" activeClassName="border-b-2 border-white">Home</NavLink>
                     </li>
                     <li className="flex">
-                        <a href="#" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white">Link</a>
+                        <NavLink to="/contact" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white" activeClassName="border-b-2 border-white">Contact</NavLink>
                     </li>
                     <li className="flex">
-                        <a href="#" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white">Link</a>
+                        <NavLink to="/news" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white" activeClassName="border-b-2 border-white">News</NavLink>
                     </li>
-                    <li className="flex">
-                        <a href="#" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-white">Link</a>
-                    </li>
+
                 </ul>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
                     <button className="self-center px-8 py-3 rounded">Sign in</button>

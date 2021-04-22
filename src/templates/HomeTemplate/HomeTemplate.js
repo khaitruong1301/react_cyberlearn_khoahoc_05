@@ -17,6 +17,7 @@ export const HomeTemplate = (props) => { //path, exact, Component
 
             <Component {...propsRoute} />
 
+            
 
 
             <footer className="bg-black h-10 text-white">
