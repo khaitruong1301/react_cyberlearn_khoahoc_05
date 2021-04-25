@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from 'antd';
+import { useSelector,useDispatch } from 'react-redux'
 
-import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { getCarouselAction } from '../../../../redux/actions/CarouselActions';
 
 const contentStyle = {
-    height: '400px',
+    height: '600px',
     color: '#fff',
     lineHeight: '160px',
     textAlign: 'center',
@@ -17,7 +19,21 @@ export default function HomeCarousel(props) {
 
     const { arrImg } = useSelector(state => state.CarouselReducer)
 
-    console.log('arrImg', arrImg);
+    const dispatch = useDispatch();
+
+    //Sẽ tự kích hoạt khi component load ra 
+    useEffect( () => {
+    
+        //1 action = {type:'',data}
+        //2 (phải cài middleware): callBackFunction (dispatch)
+
+        // const action = getCarouselAction(1);
+
+        dispatch(getCarouselAction());
+
+            
+
+    }, [])
 
 
     const renderImg = () => {
