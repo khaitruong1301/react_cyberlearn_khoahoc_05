@@ -4,6 +4,7 @@ import { useSelector,useDispatch } from 'react-redux'
 
 import axios from 'axios'
 import { getCarouselAction } from '../../../../redux/actions/CarouselActions';
+import './HomeCarousel.css';
 
 const contentStyle = {
     height: '600px',
@@ -12,7 +13,8 @@ const contentStyle = {
     textAlign: 'center',
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
+    
 };
 
 export default function HomeCarousel(props) {
@@ -40,16 +42,18 @@ export default function HomeCarousel(props) {
         return arrImg.map((item, index) => {
             return <div key={index}>
                 <div style={{ ...contentStyle, backgroundImage: `url(${item.hinhAnh})` }}>
-                    <img src={item.hinhAnh} className="w-full opacity-0" alt={item.hinhAnh} />
+                    <img src={item.hinhAnh} className="opacity-0"  alt={item.hinhAnh} />
                 </div>
             </div>
         })
     }
 
     return (
-        <Carousel effect="fade" >
+
+        <Carousel effect="fade" style={{width:'100%',padding:0,margin:0}} >
             {renderImg()}
 
         </Carousel>
+   
     )
 }
