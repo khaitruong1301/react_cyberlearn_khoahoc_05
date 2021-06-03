@@ -1,4 +1,5 @@
 import { SET_DANH_SACH_PHIM, SET_FILM_SAP_CHIEU,SET_FILM_DANG_CHIEU } from "../actions/types/QuanLyPhimType"
+import { SET_CHI_TIET_PHIM } from "../actions/types/QuanLyRapType";
 
 
 
@@ -35,7 +36,10 @@ const stateDefault = {
     ],
     dangChieu: true,
     sapChieu:true,
-    arrFilmDefault: []
+    arrFilmDefault: [],
+
+    filmDetail:{}
+
 
 }
 
@@ -58,6 +62,12 @@ export const QuanLyPhimReducer = (state=stateDefault,action ) => {
 
             state.arrFilm = state.arrFilmDefault.filter(film => film.sapChieu === state.sapChieu );
             return {...state}
+        }
+
+        case SET_CHI_TIET_PHIM :{
+            state.filmDetail = action.filmDetail;
+            return {...state};
+
         }
 
         default : return {...state}
