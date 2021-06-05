@@ -7,9 +7,9 @@ export default function Header(props) {
     return (
         <header className="p-4 bg-coolGray-100 text-coolGray-800 bg-opacity-40 bg-black text-white fixed w-full z-10" >
             <div className="container flex justify-between h-16 mx-auto">
-                <a href="#" aria-label="Back to homepage" className="flex items-center p-2">
+                <NavLink to="/" aria-label="Back to homepage" className="flex items-center p-2">
                     <img src="https://cyberlearn.vn/wp-content/uploads/2020/03/cyberlearn-min-new-opt2.png" alt="cyberlearn.vn" />
-                </a>
+                </NavLink>
                 <ul className="items-stretch hidden space-x-3 lg:flex">
                     <li className="flex">
                         <NavLink to="/home" className="flex items-center -mb-0.5 border-b-2 px-4 border-transparent text-violet-600 border-violet-600 text-white" activeClassName="border-b-2 border-white">Home</NavLink>
