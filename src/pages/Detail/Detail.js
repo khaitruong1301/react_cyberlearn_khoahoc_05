@@ -81,7 +81,7 @@ export default function Detail(props) {
                                     {filmDetail.heThongRapChieu?.map((htr, index) => {
                                         return <TabPane
                                             tab={<div className="flex flex-row items-center justify-center">
-                                                <img src={htr.logo} className="rounded-full w-full" style={{width:50}} />
+                                                <img src={htr.logo} className="rounded-full w-full" style={{width:50}} alt="..." />
                                                 <div className="text-center ml-2">
                                                 {htr.tenHeThongRap}
                                                 </div>
@@ -90,7 +90,7 @@ export default function Detail(props) {
                                                 {htr.cumRapChieu?.map((cumRap,index)=>{ 
                                                     return <div className="mt-5" key={index}>
                                                         <div className="flex flex-row">
-                                                            <img style={{width:60,height:60}} src={cumRap.hinhAnh} />
+                                                            <img style={{width:60,height:60}} src={cumRap.hinhAnh} alt="..." />
                                                             <div className="ml-2">
                                                                 <p style={{fontSize:20,fontWeight:'bold',lineHeight:1}} >{cumRap.tenCumRap}</p>
                                                                 <p className="text-gray-400" style={{marginTop:0}}>{cumRap.diaChi}</p>

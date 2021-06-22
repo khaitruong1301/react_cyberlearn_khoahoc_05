@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { layChiTietPhongVeAction } from '../../redux/actions/QuanLyDatVeActions';
 import style from './Checkout.module.css';
 import { CheckOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons'
 import './Checkout.css';
-import { DAT_VE } from '../../redux/actions/types/QuanLyDatVeType'
+import { CHUYEN_TAB, DAT_VE } from '../../redux/actions/types/QuanLyDatVeType'
 import _ from 'lodash';
 import { ThongTinDatVe } from '../../_core/models/ThongTinDatVe';
 import { datVeAction } from '../../redux/actions/QuanLyDatVeActions';
@@ -172,14 +172,21 @@ function Checkout(props) {
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-    console.log(key);
-}
-export default function (props) {
+export default function CheckoutTab(props) {
 
+    const {tabActive} = useSelector(state=>state.QuanLyDatVeReducer);
+    const dispatch = useDispatch();
+    console.log('tabActive',tabActive)
     return <div className="p-5">
-        <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="01 CHỌN GHẾ & THANH TOÁN" key="1">
+        <Tabs defaultActiveKey="1" activeKey={tabActive} onChange={(key)=>{
+
+            // console.log('key',  key)
+           dispatch({
+                type:'CHANGE_TAB_ACTIVE',
+                number:key.toString()
+            })
+        }}>
+            <TabPane tab="01 CHỌN GHẾ & THANH TOÁN" key="1" >
                 <Checkout {...props} />
             </TabPane>
             <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="2">
@@ -217,10 +224,10 @@ function KetQuaDatVe(props) {
                     <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={ticket.hinhAnh} />
                     <div className="flex-grow">
                         <h2 className="text-pink-500 title-font font-medium text-2xl">{ticket.tenPhim}</h2>
-                        <p className="text-gray-500"><span className="font-bold">Giờ chiếu:</span> { moment(ticket.ngayDat).format('hh:mm A')} - <span className="font-bold">Ngày chiếu:</span>  {moment(ticket.ngayDat).format('DD-MM-YYYY')} .</p>
+                        <p className="text-gray-500"><span className="font-bold">Giờ chiếu:</span> {moment(ticket.ngayDat).format('hh:mm A')} - <span className="font-bold">Ngày chiếu:</span>  {moment(ticket.ngayDat).format('DD-MM-YYYY')} .</p>
                         <p><span className="font-bold">Địa điểm:</span> {seats.tenHeThongRap}   </p>
                         <p>
-                        <span className="font-bold">Tên rạp:</span>  {seats.tenCumRap} - <span className="font-bold">Ghế:</span>  {ticket.danhSachGhe.map((ghe,index)=> {return <span className="text-green-500 text-xl" key={index}> [ {ghe.tenGhe} ] </span>})}
+                            <span className="font-bold">Tên rạp:</span>  {seats.tenCumRap} - <span className="font-bold">Ghế:</span>  {ticket.danhSachGhe.map((ghe, index) => { return <span className="text-green-500 text-xl" key={index}> [ {ghe.tenGhe} ] </span> })}
                         </p>
                     </div>
                 </div>
