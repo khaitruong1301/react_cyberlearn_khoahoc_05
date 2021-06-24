@@ -60,16 +60,22 @@ function Checkout(props) {
             // });
         })
 
+        window.addEventListener("beforeunload", clearGhe);
 
         return () => {
             //Gửi thông tin về signalr
 
             // const danhSachGheDangdat = getState().QuanLyDatVeReducer.danhSachGheDangDat;
-            connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id);
+            window.removeEventListener("beforeunload", clearGhe);
 
         }
 
-    }, [])
+    }, []);
+
+    const clearGhe = ()=> {
+        connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id);
+
+    }
 
     console.log({ chiTietPhongVe });
     const { thongTinPhim, danhSachGhe } = chiTietPhongVe;
