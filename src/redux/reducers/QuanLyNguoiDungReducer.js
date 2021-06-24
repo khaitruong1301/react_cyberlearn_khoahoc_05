@@ -15,7 +15,6 @@ const stateDefault = {
 }
 
 
-
 export const QuanLyNguoiDungReducer = (state = stateDefault, action) => {
 
     switch (action.type) {

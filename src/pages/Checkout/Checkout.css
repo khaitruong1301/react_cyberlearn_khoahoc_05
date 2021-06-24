@@ -34,3 +34,9 @@
     border: 1px solid orange;
 
   }
+
+  .gheKhachChon {
+      background-color: rgb(23, 63, 111) !important;
+      cursor: no-drop;
+      
+  }

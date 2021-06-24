@@ -1,8 +1,9 @@
 import { quanLyDatVeService } from "../../services/QuanLyDatVeService";
 import { ThongTinDatVe } from "../../_core/models/ThongTinDatVe";
 import { displayLoadingAction, hideLoadingAction } from "./LoadingActions";
-import { CHUYEN_TAB, DAT_VE_HOAN_TAT, SET_CHI_TIET_PHONG_VE } from "./types/QuanLyDatVeType";
-
+import { CHUYEN_TAB, DAT_VE, DAT_VE_HOAN_TAT, SET_CHI_TIET_PHONG_VE } from "./types/QuanLyDatVeType";
+import {history} from '../../App'
+import { connection } from "../..";
 
 
 export const layChiTietPhongVeAction = (maLichChieu) => {
@@ -31,6 +32,26 @@ export const layChiTietPhongVeAction = (maLichChieu) => {
         }
     }
 }
+
+export const DatGheAction =  (ghe,maLichChieu) => {
+
+    return async (dispatch,getState)=> {
+
+      await dispatch( {
+            type: DAT_VE,
+            gheDuocChon: ghe
+        });
+
+        //Gửi thông tin về signalr
+        const userLogin = getState().QuanLyNguoiDungReducer.userLogin;
+        const danhSachGheDangdat = getState().QuanLyDatVeReducer.danhSachGheDangDat;
+         connection.invoke('datGhe',userLogin.taiKhoan,JSON.stringify( danhSachGheDangdat),maLichChieu)
+
+        
+    }
+
+}
+
 
 
 export const datVeAction = (thongTinDatVe = new ThongTinDatVe()) => {

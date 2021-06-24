@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { layChiTietPhongVeAction } from '../../redux/actions/QuanLyDatVeActions';
+import { DatGheAction, layChiTietPhongVeAction } from '../../redux/actions/QuanLyDatVeActions';
 import style from './Checkout.module.css';
 import { CheckOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons'
 import './Checkout.css';
@@ -13,19 +13,62 @@ import { datVeAction } from '../../redux/actions/QuanLyDatVeActions';
 import { Tabs } from 'antd';
 import { layThongTinNguoiDungAction } from '../../redux/actions/QuanLyNguoiDungAction';
 import moment from 'moment';
+import { connection } from '../..';
 
 
 function Checkout(props) {
 
     const { userLogin } = useSelector(state => state.QuanLyNguoiDungReducer);
-    const { chiTietPhongVe, danhSachGheDangDat } = useSelector(state => state.QuanLyDatVeReducer);
+    let { chiTietPhongVe, danhSachGheDangDat, danhSachGheKhachChon } = useSelector(state => state.QuanLyDatVeReducer);
+
     const dispatch = useDispatch();
     console.log('danhSachGheDangDat', danhSachGheDangDat);
     useEffect(() => {
         //Gọi hàm tạo ra 1 async function 
         const action = layChiTietPhongVeAction(props.match.params.id);
         //Dispatch function này đi
-        dispatch(action)
+        dispatch(action);
+        
+        // connection.start().then(function () {
+            connection.invoke("loadDanhSachGhe", props.match.params.id)
+            connection.on("loadDanhSachGheDaDat", (dsGheDangDatReturn) => {
+
+                // dsGheDangDatReturn = dsGheDangDatReturn.filter(tt => tt.taiKhoan !== userLogin.taiKhoan);
+                // console.log('aaa',dsGheDangDatReturn)
+
+                if (userLogin.taiKhoan != dsGheDangDatReturn.taiKhoan) {
+
+
+                    let danhSachGheKhachChonCapNhat = dsGheDangDatReturn.reduce((arrResult, item, index) => {
+                        if (item.taiKhoan !== userLogin.taiKhoan) {
+                            console.log('item', item)
+                            let danhSachGhe = JSON.parse(item.danhSachGhe);
+                            return [...arrResult, ...danhSachGhe];
+                        }
+                        return [...arrResult]
+                    }, []);
+
+                    danhSachGheKhachChonCapNhat = _.uniqBy(danhSachGheKhachChonCapNhat, 'maGhe');
+
+                    console.log(danhSachGheKhachChonCapNhat, userLogin.taiKhoan)
+                    dispatch({
+                        type: 'KHACH_DAT',
+                        danhSachGheKhachChon: danhSachGheKhachChonCapNhat
+                    })
+                }
+
+            // });
+        })
+
+
+        return () => {
+            //Gửi thông tin về signalr
+
+            // const danhSachGheDangdat = getState().QuanLyDatVeReducer.danhSachGheDangDat;
+            connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id);
+
+        }
+
     }, [])
 
     console.log({ chiTietPhongVe });
@@ -41,6 +84,13 @@ function Checkout(props) {
             //Kiểm tra từng ghế render xem có trong mảng ghế đang đặt hay không
             let indexGheDD = danhSachGheDangDat.findIndex(gheDD => gheDD.maGhe === ghe.maGhe);
 
+            //Kiểm tra danh sách ghế khách chọn 
+            let classGheKhachChon = '';
+            let indexGheKhachChon = danhSachGheKhachChon.findIndex(gheKC => gheKC.maGhe == ghe.maGhe);
+
+            if (indexGheKhachChon !== -1) {
+                classGheKhachChon = 'gheKhachChon';
+            }
             let classGheDaDuocDat = '';
             if (userLogin.taiKhoan === ghe.taiKhoanNguoiDat) {
                 classGheDaDuocDat = 'gheDaDuocDat';
@@ -54,11 +104,8 @@ function Checkout(props) {
 
             return <Fragment key={index}>
                 <button onClick={() => {
-                    dispatch({
-                        type: DAT_VE,
-                        gheDuocChon: ghe
-                    })
-                }} disabled={ghe.daDat} className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} text-center`} key={index}>
+                    dispatch(DatGheAction(ghe, props.match.params.id));
+                }} disabled={ghe.daDat} className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachChon} text-center`} key={index}>
 
                     {ghe.daDat ? classGheDaDuocDat != '' ? <UserOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> : <CloseOutlined style={{ marginBottom: 7.5, fontWeight: 'bold' }} /> : ghe.stt}
 
@@ -174,16 +221,16 @@ const { TabPane } = Tabs;
 
 export default function CheckoutTab(props) {
 
-    const {tabActive} = useSelector(state=>state.QuanLyDatVeReducer);
+    const { tabActive } = useSelector(state => state.QuanLyDatVeReducer);
     const dispatch = useDispatch();
-    console.log('tabActive',tabActive)
+    console.log('tabActive', tabActive)
     return <div className="p-5">
-        <Tabs defaultActiveKey="1" activeKey={tabActive} onChange={(key)=>{
+        <Tabs defaultActiveKey="1" activeKey={tabActive} onChange={(key) => {
 
             // console.log('key',  key)
-           dispatch({
-                type:'CHANGE_TAB_ACTIVE',
-                number:key.toString()
+            dispatch({
+                type: 'CHANGE_TAB_ACTIVE',
+                number: key.toString()
             })
         }}>
             <TabPane tab="01 CHỌN GHẾ & THANH TOÁN" key="1" >
@@ -210,7 +257,18 @@ function KetQuaDatVe(props) {
 
     useEffect(() => {
         const action = layThongTinNguoiDungAction();
-        dispatch(action)
+        dispatch(action);
+        let tempArray = [];
+        connection.on("loadDanhSachGheDaDat", (dsGheDangDatReturn) => {
+            console.log(dsGheDangDatReturn, typeof (dsGheDangDatReturn));
+            // tempArray = dsGheDangDatReturn.filter(item => item.maLichChieu === parseInt(this.state.maLichChieu));
+            // console.log("tempArray", tempArray);
+            // // this.setState({
+            // //     danhSachGheInvoke: tempArray
+            // // })
+            // this.props.putDataInvoke(tempArray)
+        })
+
     }, [])
 
     console.log('thongTinNguoiDung', thongTinNguoiDung);
@@ -218,7 +276,6 @@ function KetQuaDatVe(props) {
     const renderTicketItem = function () {
         return thongTinNguoiDung.thongTinDatVe?.map((ticket, index) => {
             const seats = _.first(ticket.danhSachGhe);
-
             return <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                     <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={ticket.hinhAnh} />
@@ -232,7 +289,7 @@ function KetQuaDatVe(props) {
                     </div>
                 </div>
             </div>
-        })
+        });
     }
 
     return <div className="p-5">
