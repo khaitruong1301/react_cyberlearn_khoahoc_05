@@ -5,7 +5,8 @@ import {ThongTinLichChieu} from '../../_core/models/ThongTinPhongVe'
 const stateDefault = {
     chiTietPhongVe: new ThongTinLichChieu(),
     danhSachGheDangDat: [], //danh sách ghế đang đặt
-    danhSachGheKhachDat: [{maGhe:48041},{maGhe:48042}],
+    danhSachGheKhachDat: [],
+    // [{maGhe:48041},{maGhe:48042}],
     tabActive: '1'
 }
 
@@ -50,6 +51,10 @@ export const QuanLyDatVeReducer = (state=stateDefault,action)=> {
             return {...state};
         }
 
+        case 'DAT_GHE' : {
+            state.danhSachGheKhachDat = action.arrGheKhachDat;
+            return {...state}
+        }
 
         default: return {...state}
     }
