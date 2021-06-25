@@ -4,7 +4,8 @@ import {ThongTinLichChieu} from '../../_core/models/ThongTinPhongVe'
 
 const stateDefault = {
     chiTietPhongVe: new ThongTinLichChieu(),
-    danhSachGheDangDat: [],
+    danhSachGheDangDat: [], //danh sách ghế đang đặt
+    danhSachGheKhachDat: [{maGhe:48041},{maGhe:48042}],
     tabActive: '1'
 }
 

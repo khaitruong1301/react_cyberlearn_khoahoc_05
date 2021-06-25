@@ -34,3 +34,9 @@
     border: 1px solid orange;
 
   }
+
+  .gheKhachDat {
+    background-color: rgb(242, 25, 191) !important;
+    cursor: no-drop
+    ;
+  }
