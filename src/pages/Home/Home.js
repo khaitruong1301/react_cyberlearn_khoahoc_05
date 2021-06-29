@@ -14,8 +14,9 @@ export default function Home(props) {
     const {heThongRapChieu} = useSelector(state => state.QuanLyRapReducer);
     const dispatch = useDispatch();
     console.log('propsHome', arrFilm);
-    // props.match.params
 
+    
+    // props.match.params
     // const renderFilms = () => {
     //     return arrFilm.map((phim, index) => {
     //         return <Film key={index} />
