@@ -16,6 +16,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { themPhimUploadHinhAction } from '../../../../redux/actions/QuanLyPhimActions';
 import { GROUPID } from '../../../../util/settings/config';
+import _ from 'lodash';
 
 const AddNew = () => {
   const [componentSize, setComponentSize] = useState('default');
@@ -33,7 +34,7 @@ const AddNew = () => {
       hot: false,
       danhGia: 0,
       hinhAnh: {},
-     
+
     },
     onSubmit: (values) => {
       console.log('values', values);
@@ -43,8 +44,10 @@ const AddNew = () => {
       for (let key in values) {
         if (key !== 'hinhAnh') {
           formData.append(key, values[key]);
-        }else {
-          formData.append('File', values.hinhAnh, values.hinhAnh.name);
+        } else {
+          if (!_.isEmpty(values.hinhAnh)) {
+            formData.append('File', values.hinhAnh, values.hinhAnh.name);
+          }
         }
       }
       //Gọi api gửi các giá trị formdata về backend xử lý

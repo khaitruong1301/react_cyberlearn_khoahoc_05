@@ -1,4 +1,5 @@
 import { quanLyPhimService } from "../../services/QuanLyPhimService";
+import { DISPLAY_LOADING, HIDE_LOADING } from "./types/LoadingType";
 import { SET_DANH_SACH_PHIM } from "./types/QuanLyPhimType";
 
 
@@ -48,13 +49,17 @@ export const layThongTinPhim = (maPhim) => {
 
     return async (dispatch) => {
         try {
+
+            dispatch({type:DISPLAY_LOADING});
             //Sử dụng tham số thamSo
             const result = await quanLyPhimService.layThongTinPhim(maPhim);
             //Sau khi lấy dữ liệu từ api về => redux (reducer)
-            dispatch({
+            await dispatch({
                 type: 'SET_THONG_TIN_PHIM',
                 thongTinPhim: result.data.content
-            })
+            });
+            dispatch({type:HIDE_LOADING});
+
         } catch (errors) {
             console.log('errors', errors)
         }
@@ -70,8 +75,8 @@ export const capNhatPhimAction = (formData) => {
 
 
             let result = await quanLyPhimService.capNhatPhim(formData);
-            alert('Cập nhật phim thành công!')
             console.log('result', result.data.content);
+            alert('Cập nhật phim thành công!')
 
 
             
