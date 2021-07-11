@@ -13,6 +13,21 @@ export class QuanLyPhimService  extends baseService{
     layDanhSachPhim = () => {
         return this.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUPID}`)
     }
+
+
+    themPhimUploadHinh = (formData) => {
+        return this.post(`/api/QuanLyPhim/ThemPhimUploadHinh`,formData);
+    } 
+
+
+    layThongTinPhim = (maPhim) =>{
+        return this.get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${maPhim}`);     
+    }
+
+
+    capNhatPhim = (formData) =>{
+        return this.post(`/api/QuanLyPhim/CapNhatPhimUpload`,formData);     
+    }
 }
 
 

@@ -78,8 +78,8 @@ export default function Films() {
             title: 'Hành động',
             dataIndex: 'hanhDong',
             render: (text,film) => {return <Fragment>
-                <NavLink className=" mr-2  text-2xl" to="/"><EditOutlined style={{color:'blue'}} /> </NavLink>
-                <NavLink className="text-2xl" to="/"><DeleteOutlined style={{color:'red'}}  /> </NavLink>
+                <NavLink key={1} className=" mr-2  text-2xl" to={`/admin/films/edit/${film.maPhim}`}><EditOutlined style={{color:'blue'}} /> </NavLink>
+                <NavLink key={2} className="text-2xl" to="/"><DeleteOutlined style={{color:'red'}}  /> </NavLink>
             </Fragment>},
             sortDirections: ['descend','ascend'],
             width:'25%'
