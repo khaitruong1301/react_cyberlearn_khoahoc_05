@@ -15,7 +15,7 @@ import { useFormik } from 'formik';
 import moment from 'moment';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { layThongTinPhimAction } from '../../../../redux/actions/QuanLyPhimActions';
+import { layThongTinPhimAction, themPhimUploadHinhAction } from '../../../../redux/actions/QuanLyPhimActions';
 import { GROUPID } from '../../../../util/settings/config';
 
 const Edit = (props) => {
@@ -161,7 +161,7 @@ const Edit = (props) => {
 
 
         <Form.Item label="Số sao">
-          <InputNumber onChange={handle('danhGia')} value={formik.values.danhGia} />
+          <InputNumber onChange={handleChangeInputNumber('danhGia')} value={formik.values.danhGia} />
         </Form.Item>
 
         <Form.Item label="Hình ảnh">
