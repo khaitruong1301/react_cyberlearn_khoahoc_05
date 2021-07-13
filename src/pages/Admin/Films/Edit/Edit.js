@@ -38,6 +38,7 @@ const Edit = (props) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      maPhim:thongTinPhim.maPhim,
       dangChieu: thongTinPhim.dangChieu,
       sapChieu: thongTinPhim.sapChieu,
       hot: thongTinPhim.hot,
@@ -59,24 +60,24 @@ const Edit = (props) => {
         if (key !== 'hinhAnh') {
           formData.append(key, values[key]);
         } else {
-          formData.append('File', values.hinhAnh, values.hinhAnh.name);
+          if (values.hinhAnh !== null) {
+            formData.append('File', values.hinhAnh, values.hinhAnh.name);
+
+          }
         }
       }
-      //Gọi api gửi các giá trị formdata về backend xử lý
-      dispatch(themPhimUploadHinhAction(formData));
 
     }
   })
 
   const handleChangeDatePicker = (value) => {
     // console.log('datepickerchange',);
-    let ngayKhoiChieu = moment(value).format('DD/MM/YYYY');
+    let ngayKhoiChieu = moment(value);
     formik.setFieldValue('ngayKhoiChieu', ngayKhoiChieu);
 
   }
 
   const handleChangeSwitch = (name) => {
-
     return (value) => {
       formik.setFieldValue(name, value)
     }
@@ -147,7 +148,7 @@ const Edit = (props) => {
           <Input name="moTa" onChange={formik.handleChange} value={formik.values.moTa} />
         </Form.Item>
         <Form.Item label="Ngày khởi chiếu">
-          <DatePicker onChange={handleChangeDatePicker} format="DD/MM/YYYY" value={moment(formik.values.ngayKhoiChieu, 'DD/MM/YYYY')} />
+          <DatePicker onChange={handleChangeDatePicker} format="DD/MM/YYYY" value={moment(formik.values.ngayKhoiChieu)} />
         </Form.Item>
         <Form.Item label="Đang chiếu">
           <Switch name="dangChieu" onChange={handleChangeSwitch('dangChieu')} checked={formik.values.dangChieu} />
@@ -170,7 +171,7 @@ const Edit = (props) => {
           <img width={100} height={100} src={imgSrc === '' ? thongTinPhim.hinhAnh : imgSrc} />
         </Form.Item>
         <Form.Item label="Button">
-          <button type="submit" className="bg-blue-300 text-white p-2">Thêm phim</button>
+          <button type="submit" className="bg-blue-300 text-white p-2">Cập nhật</button>
 
         </Form.Item>
       </Form>

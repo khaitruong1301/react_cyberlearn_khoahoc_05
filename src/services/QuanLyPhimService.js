@@ -17,6 +17,9 @@ export class QuanLyPhimService  extends baseService{
     layThongTinPhim = (maPhim) => {
         return this.get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${maPhim}`)
     }
+
+    capNhatPhim = ()
+
 }
 
 
