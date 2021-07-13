@@ -37,8 +37,10 @@ const stateDefault = {
     dangChieu: true,
     sapChieu:true,
     arrFilmDefault: [],
+    filmDetail:{},
 
-    filmDetail:{}
+    thongTinPhim:{}
+
 
 
 }

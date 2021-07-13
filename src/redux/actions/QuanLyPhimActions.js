@@ -22,3 +22,19 @@ export const layDanhSachPhimAction = () => {
         }
     };
 }
+
+
+
+export const layThongTinPhimAction =  (maPhim) => {
+    return async (dispatch) => {
+        try {
+            //Sử dụng tham số thamSo
+            const result = await quanLyPhimService.layThongTinPhim(maPhim);
+
+            console.log(resutl.data.content);
+            
+        }catch (errors) {
+            console.log('errors',errors)
+        }
+    };
+}
