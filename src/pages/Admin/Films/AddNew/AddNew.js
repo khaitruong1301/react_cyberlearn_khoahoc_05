@@ -45,9 +45,7 @@ const AddNew = () => {
         if (key !== 'hinhAnh') {
           formData.append(key, values[key]);
         } else {
-          if (!_.isEmpty(values.hinhAnh)) {
             formData.append('File', values.hinhAnh, values.hinhAnh.name);
-          }
         }
       }
       //Gọi api gửi các giá trị formdata về backend xử lý

@@ -51,11 +51,10 @@ const Edit = (props) => {
                 if (key !== 'hinhAnh') {
                     formData.append(key, values[key]);
                 } else {
-                    if (!_.isEmpty(formik.hinhAnh)) {
+                    console.log('aa',values.hinhAnh)
                         formData.append('File', values.hinhAnh, values.hinhAnh.name);
-                    }
                 }
-                
+
                 console.log(`formData[${key}]=`, values[key])
             }
 
@@ -100,6 +99,8 @@ const Edit = (props) => {
         //Lấy file ra từ e
         let file = e.target.files[0];
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif' || file.type === 'image/png') {
+            //Đem dữ liệu file lưu vào formik
+            formik.setFieldValue('hinhAnh', file);
             //Tạo đối tượng để đọc file
             let reader = new FileReader();
             reader.readAsDataURL(file);
@@ -109,8 +110,7 @@ const Edit = (props) => {
                 setImgSrc(e.target.result);//Hình base 64
 
             }
-            //Đem dữ liệu file lưu vào formik
-            formik.setFieldValue('hinhAnh', file);
+
         }
     }
 
