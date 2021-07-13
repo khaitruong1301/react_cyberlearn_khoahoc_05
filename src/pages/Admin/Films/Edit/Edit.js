@@ -36,11 +36,11 @@ const Edit = (props) => {
             sapChieu: thongTinPhim?.sapChieu,
             hot: thongTinPhim?.hot,
             danhGia: thongTinPhim?.danhGia,
-            hinhAnh: {}
+            hinhAnh: null
 
         },
 
-        onSubmit: (values) => {
+        onSubmit:  async (values) => {
             console.log('values', values);
             console.log(formik.values)
             values.maNhom = GROUPID;
@@ -51,8 +51,10 @@ const Edit = (props) => {
                 if (key !== 'hinhAnh') {
                     formData.append(key, values[key]);
                 } else {
-                    console.log('aa',values.hinhAnh)
+                    console.log('aa', values.hinhAnh)
+                    if (values.hinhAnh) {
                         formData.append('File', values.hinhAnh, values.hinhAnh.name);
+                    }
                 }
 
                 console.log(`formData[${key}]=`, values[key])
@@ -95,16 +97,16 @@ const Edit = (props) => {
         }
     }
 
-    const handleChangeFile = (e) => {
+    const handleChangeFile = async (e) => {
         //Lấy file ra từ e
         let file = e.target.files[0];
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif' || file.type === 'image/png') {
             //Đem dữ liệu file lưu vào formik
-            formik.setFieldValue('hinhAnh', file);
+            await formik.setFieldValue('hinhAnh', file);
             //Tạo đối tượng để đọc file
             let reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = (e) => {
+            reader.onload =  (e) => {
                 // console.log(e.target.result);
 
                 setImgSrc(e.target.result);//Hình base 64
