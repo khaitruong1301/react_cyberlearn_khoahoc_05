@@ -15,7 +15,7 @@ import { useFormik } from 'formik';
 import moment from 'moment';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { layThongTinPhimAction, themPhimUploadHinhAction } from '../../../../redux/actions/QuanLyPhimActions';
+import { capNhatPhimUploadAction, layThongTinPhimAction, themPhimUploadHinhAction } from '../../../../redux/actions/QuanLyPhimActions';
 import { GROUPID } from '../../../../util/settings/config';
 
 const Edit = (props) => {
@@ -38,7 +38,7 @@ const Edit = (props) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      maPhim:thongTinPhim.maPhim,
+      maPhim: thongTinPhim.maPhim,
       dangChieu: thongTinPhim.dangChieu,
       sapChieu: thongTinPhim.sapChieu,
       hot: thongTinPhim.hot,
@@ -66,6 +66,8 @@ const Edit = (props) => {
           }
         }
       }
+      //Cập nhật phim upload hình
+      dispatch(capNhatPhimUploadAction(formData));
 
     }
   })
@@ -89,20 +91,20 @@ const Edit = (props) => {
     }
   }
 
-  const handleChangeFile = (e) => {
+  const handleChangeFile = async (e) => {
     //Lấy file ra từ e
     let file = e.target.files[0];
     if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif' || file.type === 'image/png') {
+      //Đem dữ liệu file lưu vào formik
+      await formik.setFieldValue('hinhAnh', file);
       //Tạo đối tượng để đọc file
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         // console.log(e.target.result);
         setImgSrc(e.target.result);//Hình base 64
-
       }
-      //Đem dữ liệu file lưu vào formik
-      formik.setFieldValue('hinhAnh', file);
+
     }
   }
 
