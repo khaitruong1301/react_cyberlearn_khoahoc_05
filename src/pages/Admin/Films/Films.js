@@ -4,7 +4,7 @@ import { Button, Table } from 'antd';
 import { Input, Space } from 'antd';
 import { AudioOutlined,EditOutlined,SearchOutlined ,DeleteOutlined} from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { layDanhSachPhimAction } from '../../../redux/actions/QuanLyPhimActions';
+import { layDanhSachPhimAction, xoaPhimAction } from '../../../redux/actions/QuanLyPhimActions';
 import { NavLink } from 'react-router-dom';
 import { history } from '../../../App';
 const { Search } = Input;
@@ -76,10 +76,18 @@ export default function Films() {
         },
         {
             title: 'Hành động',
-            dataIndex: 'hanhDong',
+            dataIndex: 'maPhim',
             render: (text,film) => {return <Fragment>
                 <NavLink key={1} className=" mr-2  text-2xl" to={`/admin/films/edit/${film.maPhim}`}><EditOutlined style={{color:'blue'}} /> </NavLink>
-                <NavLink key={2}  className="text-2xl" to="/"><DeleteOutlined style={{color:'red'}}  /> </NavLink>
+                <span style={{cursor:'pointer'}} key={2}  className="text-2xl" onClick={()=>{
+                        //Gọi action xoá
+                    if(window.confirm('Bạn có chắc muốn xoá phim ' + film.tenPhim)) {
+                        //Gọi action
+                        dispatch(xoaPhimAction(film.maPhim));
+                    }
+
+
+                }}><DeleteOutlined style={{color:'red'}}  /> </span>
             </Fragment>},
             sortDirections: ['descend','ascend'],
             width:'25%'
@@ -89,7 +97,13 @@ export default function Films() {
 
     
 
-    const onSearch = value => console.log(value);
+    const onSearch = value => {
+
+        console.log(value);
+        //Gọi api layDanhSachPhim
+        dispatch(layDanhSachPhimAction(value));
+
+    };
 
     function onChange(pagination, filters, sorter, extra) {
         console.log('params', pagination, filters, sorter, extra);
@@ -109,11 +123,11 @@ export default function Films() {
                 placeholder="input search text"
                 enterButton={<SearchOutlined />}
                 size="large"
-     
+
                 onSearch={onSearch}
             />
 
-            <Table columns={columns} dataSource={data} onChange={onChange} />
+            <Table columns={columns} dataSource={data} onChange={onChange} rowKey={"maPhim"} />
         </div>
     )
 }
