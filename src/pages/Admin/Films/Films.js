@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { layDanhSachPhimAction } from '../../../redux/actions/QuanLyPhimActions';
 import { NavLink } from 'react-router-dom';
 import { history } from '../../../App';
+import axios from 'axios';
+import { TOKEN } from '../../../util/settings/config';
 const { Search } = Input;
 
 export default function Films() {
@@ -60,6 +62,7 @@ export default function Films() {
         {
             title: 'Mô tả',
             dataIndex: 'moTa',
+            
             // sorter: (a, b) => {
             //     let moTaA = a.moTa.toLowerCase().trim();
             //     let moTaB = b.moTa.toLowerCase().trim();
@@ -79,7 +82,23 @@ export default function Films() {
             dataIndex: 'hanhDong',
             render: (text,film) => {return <Fragment>
                 <NavLink key={1} className=" mr-2  text-2xl" to={`/admin/films/edit/${film.maPhim}`}><EditOutlined style={{color:'blue'}} /> </NavLink>
-                <NavLink key={2}  className="text-2xl" to="/"><DeleteOutlined style={{color:'red'}}  /> </NavLink>
+                <span style={{cursor:'pointer'}} key={2}  className="text-2xl" onClick={()=>{
+                    if(window.confirm('Bạn có chắc mua xoá')) {
+                        axios({
+                            url:`http://movieapi.cyberlearn.vn/api/QuanLyPhim/XoaPhim?MaPhim=${film.maPhim}`,
+                            method:'DELETE',
+                            headers: {'Authorization': 'Bearer ' + localStorage.getItem(TOKEN)}
+                        }).then(result => {
+                            console.log(result)
+                        }).catch(error => {
+                            console.log(error.response?.data);
+                            dispatch(layDanhSachPhimAction())
+                        })
+                    }
+
+
+                  
+                }}><DeleteOutlined style={{color:'red'}}  /> </span>
             </Fragment>},
             sortDirections: ['descend','ascend'],
             width:'25%'
@@ -113,7 +132,7 @@ export default function Films() {
                 onSearch={onSearch}
             />
 
-            <Table columns={columns} dataSource={data} onChange={onChange} />
+            <Table columns={columns} dataSource={data} onChange={onChange} rowKey={'maPhim'} />
         </div>
     )
 }
